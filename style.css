@@ -52,6 +52,10 @@ header {
     font-size: 0.875rem;
 }
 
+.gradient-preview {
+    margin-bottom: 2rem;
+}
+
 .gradient-preview .preview-wrapper {
     background-color: var(--secondary-bg);
     border-radius: 1rem;
@@ -66,4 +70,93 @@ header {
     position: relative;
     overflow: hidden;
     background: linear-gradient(90deg, #3b82f6 0%, #10b981 100%);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    background-color: var(--secondary-bg);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    font-size: 0.875rem;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-color-hover);
+    border-color: var(--accent-color-hover);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.external-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.gradient-controls {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.control-group {
+    background-color: var(--secondary-bg);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.gradient-controls .type-selector {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.gradient-controls input[type="radio"] {
+    display: none;
+}
+
+.gradient-controls .type-selector label {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.gradient-controls input[type="radio"]:checked + label {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.angle-input {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.angle-input input[type="range"] {
+    flex-grow: 1;
 }

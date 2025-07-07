@@ -6,6 +6,9 @@
     <title>Gradient Studio</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="app-container">
@@ -21,7 +24,39 @@
                 <div class="preview-wrapper">
                     <div id="gradient-display" class="display"></div>
                 </div>
+                <div class="external-actions">
+                    <button id="randomize" class="btn btn-primary" aria-label="Randomize Gradient">
+                        <i class="fas fa-magic"></i> Randomize
+                    </button>
+                    <button id="copy-gradient" class="btn btn-secondary" aria-label="Copy Gradient">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
             </section>
+
+            <div class="gradient-controls">
+                <div class="control-group gradient-type-controls">
+                    <h3>Gradient Type</h3>
+                    <div class="type-selector">
+                        <input type="radio" id="linear" name="gradient-type" value="linear" checked>
+                        <label for="linear" class="btn">Linear</label>
+
+                        <input type="radio" id="radial" name="gradient-type" value="radial">
+                        <label for="radial" class="btn">Radial</label>
+
+                        <input type="radio" id="conic" name="gradient-type" value="conic">
+                        <label for="conic" class="btn">Conic</label>
+                    </div>
+                </div>
+
+                <div class="control-group angle-control">
+                    <h3>Angle</h3>
+                    <div class="angle-input">
+                        <input type="range" id="angle-slider" min="0" max="360" value="90">
+                        <span id="angle-value">90°</span>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
     <script src="script.js"></script>
