@@ -11,11 +11,24 @@
     --input-border: #cbd5e0;
 }
 
+.dark-mode {
+    --primary-bg: #121212;
+    --secondary-bg: #1e1e1e;
+    --text-primary: #e2e8f0;
+    --text-secondary: #a0aec0;
+    --accent-color: #4299e1;
+    --accent-color-hover: #3182ce;
+    --border-color: #2d3748;
+    --input-bg: #2d3748;
+    --input-border: #4a5568;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 
 body {
     font-family: 'Inter', sans-serif;
@@ -59,6 +72,26 @@ header {
     font-size: 0.875rem;
 }
 
+.gradient-preview {
+    margin-bottom: 2rem;
+}
+
+.gradient-preview .preview-wrapper {
+    background-color: var(--secondary-bg);
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.gradient-preview .display {
+    height: 300px;
+    border-radius: 0.75rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(90deg, #3b82f6 0%, #10b981 100%);
+}
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -95,36 +128,6 @@ header {
 .btn-secondary:hover {
     background-color: var(--accent-color);
     color: white;
-}
-
-.btn-accent {
-    background-color: transparent;
-    border-color: var(--text-secondary);
-    color: var(--text-primary);
-}
-
-.btn-accent:hover {
-    background-color: var(--text-secondary);
-    color: white;
-}
-
-.gradient-preview {
-    margin-bottom: 2rem;
-}
-
-.gradient-preview .preview-wrapper {
-    background-color: var(--secondary-bg);
-    border-radius: 1rem;
-    padding: 1rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-.gradient-preview .display {
-    height: 300px;
-    border-radius: 0.75rem;
-    position: relative;
-    overflow: hidden;
 }
 
 .external-actions {
@@ -176,6 +179,58 @@ header {
 
 .angle-input input[type="range"] {
     flex-grow: 1;
+}
+
+.theme-toggle {
+    position: relative;
+}
+
+.toggle-checkbox {
+    display: none;
+}
+
+.toggle-label {
+    display: block;
+    width: 60px;
+    height: 30px;
+    background-color: var(--border-color);
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+}
+
+.toggle-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.toggle-switch {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    background-color: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform var(--transition-speed);
+}
+
+.toggle-checkbox:checked + .toggle-label .toggle-switch {
+    transform: translateX(30px);
+}
+
+.btn-accent {
+    background-color: transparent;
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+}
+
+.btn-accent:hover {
+    background-color: var(--text-secondary);
+    color: white;
 }
 
 .color-stops-heading {
