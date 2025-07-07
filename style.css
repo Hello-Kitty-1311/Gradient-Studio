@@ -1,19 +1,38 @@
+:root {
+    --primary-bg: #f4f7fa;
+    --secondary-bg: #ffffff;
+    --text-primary: #1a2b3c;
+    --text-secondary: #4a5567;
+    --accent-color: #3b82f6;
+    --accent-color-hover: #2563eb;
+    --border-color: #e2e8f0;
+    --transition-speed: 0.3s;
+    --input-bg: #f9fafb;
+    --input-border: #cbd5e0;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f7fa;
-    color: #1a2b3c;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
 .app-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 header {
@@ -33,8 +52,18 @@ header {
     font-size: 0.875rem;
 }
 
+.gradient-preview .preview-wrapper {
+    background-color: var(--secondary-bg);
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
 .gradient-preview .display {
     height: 300px;
     border-radius: 0.75rem;
+    position: relative;
+    overflow: hidden;
     background: linear-gradient(90deg, #3b82f6 0%, #10b981 100%);
 }
