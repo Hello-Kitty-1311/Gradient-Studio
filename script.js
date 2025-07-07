@@ -4,6 +4,7 @@ class GradientStudio {
         this.setupEventListeners();
         this.addInitialColorStops();
         this.updateGradient();
+        this.loadTheme();
     }
 
     initializeElements() {
@@ -18,6 +19,7 @@ class GradientStudio {
         this.exportFormat = document.getElementById('export-format');
         this.codeOutput = document.getElementById('code-output');
         this.copyCodeBtn = document.getElementById('copy-code');
+        this.themeSwitch = document.getElementById('theme-switch');
     }
 
     setupEventListeners() {
@@ -30,6 +32,7 @@ class GradientStudio {
         this.copyGradientBtn.addEventListener('click', () => this.copyGradientCode());
         this.exportFormat.addEventListener('change', () => this.updateCodeOutput());
         this.copyCodeBtn.addEventListener('click', () => this.copyCode());
+        this.themeSwitch.addEventListener('change', () => this.toggleTheme());
     }
 
     addInitialColorStops() {
@@ -168,6 +171,25 @@ class GradientStudio {
                 this.copyCodeBtn.innerHTML = '<i class="fas fa-copy"></i>';
             }, 2000);
         });
+    }
+    
+    loadTheme() {
+        const savedTheme = localStorage.getItem('gradient-studio-theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            this.themeSwitch.checked = true;
+        }
+    }
+
+    toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        
+        if (isDarkMode) {
+            localStorage.setItem('gradient-studio-theme', 'dark');
+        } else {
+            localStorage.removeItem('gradient-studio-theme');
+        }
     }
 }
 
