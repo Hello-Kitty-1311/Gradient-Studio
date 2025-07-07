@@ -17,18 +17,10 @@
                 <h1>Gradient Studio</h1>
                 <p>Craft Your Perfect Gradient</p>
             </div>
-            <div class="header-actions">
-                <div class="theme-toggle">
-                    <input type="checkbox" id="theme-switch" class="toggle-checkbox">
-                    <label for="theme-switch" class="toggle-label">
-                        <span class="toggle-inner"></span>
-                        <div class="toggle-switch"></div>
-                    </label>
-                </div>
-            </div>
         </header>
+
         <main>
-          <section class="gradient-preview">
+            <section class="gradient-preview">
                 <div class="preview-wrapper">
                     <div id="gradient-display" class="display"></div>
                 </div>
@@ -74,8 +66,22 @@
                         </button>
                     </div>
                 </div>
+                <div class="control-group export-section">
+                    <h3>Export</h3>
+                    <div class="export-options">
+                        <select id="export-format">
+                            <option value="css">CSS</option>
+                            <option value="scss">SCSS</option>
+                            <option value="tailwind">Tailwind</option>
+                        </select>
+                        <textarea id="code-output" readonly placeholder="Generated code will appear here"></textarea>
+                        <button id="copy-code" class="btn btn-secondary">
+                            <i class="fas fa-copy"></i> Copy Code
+                        </button>
+                    </div>
+                </div>
             </div>
-        </main>  
+        </main>
     </div>
     <script src="script.js"></script>
 </body>

@@ -2,7 +2,6 @@ class GradientStudio {
     constructor() {
         this.initializeElements();
         this.setupEventListeners();
-        this.loadTheme();
         this.addInitialColorStops();
         this.updateGradient();
     }
@@ -16,7 +15,9 @@ class GradientStudio {
         this.addColorBtn = document.getElementById('add-color');
         this.randomizeBtn = document.getElementById('randomize');
         this.copyGradientBtn = document.getElementById('copy-gradient');
-        this.themeSwitch = document.getElementById('theme-switch');
+        this.exportFormat = document.getElementById('export-format');
+        this.codeOutput = document.getElementById('code-output');
+        this.copyCodeBtn = document.getElementById('copy-code');
     }
 
     setupEventListeners() {
@@ -27,7 +28,8 @@ class GradientStudio {
         this.addColorBtn.addEventListener('click', () => this.addColorStop());
         this.randomizeBtn.addEventListener('click', () => this.randomizeGradient());
         this.copyGradientBtn.addEventListener('click', () => this.copyGradientCode());
-        this.themeSwitch.addEventListener('change', () => this.toggleTheme());
+        this.exportFormat.addEventListener('change', () => this.updateCodeOutput());
+        this.copyCodeBtn.addEventListener('click', () => this.copyCode());
     }
 
     addInitialColorStops() {
@@ -91,6 +93,7 @@ class GradientStudio {
         }
 
         this.gradientDisplay.style.background = gradient;
+        this.updateCodeOutput();
     }
 
     getColorStops() {
@@ -134,24 +137,37 @@ class GradientStudio {
             }, 2000);
         });
     }
+    updateCodeOutput() {
+        const gradient = this.gradientDisplay.style.background;
+        const format = this.exportFormat.value;
+        let output = '';
 
-    loadTheme() {
-        const savedTheme = localStorage.getItem('gradient-studio-theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            this.themeSwitch.checked = true;
+        switch (format) {
+            case 'css':
+                output = `background: ${gradient};`;
+                break;
+            case 'scss':
+                output = `background: ${gradient};
+@function gradient-bg() {
+    @return ${gradient};
+}`;
+                break;
+            case 'tailwind':
+                output = `bg-[${gradient}]`;
+                break;
         }
+
+        this.codeOutput.value = output;
     }
 
-    toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        
-        if (isDarkMode) {
-            localStorage.setItem('gradient-studio-theme', 'dark');
-        } else {
-            localStorage.removeItem('gradient-studio-theme');
-        }
+    copyCode() {
+        this.codeOutput.select();
+        navigator.clipboard.writeText(this.codeOutput.value).then(() => {
+            this.copyCodeBtn.innerHTML = '<i class="fas fa-check"></i>';
+            setTimeout(() => {
+                this.copyCodeBtn.innerHTML = '<i class="fas fa-copy"></i>';
+            }, 2000);
+        });
     }
 }
 
