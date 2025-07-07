@@ -36,19 +36,27 @@ body {
 }
 
 header {
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    text-align: center;
+    width: 100%;
 }
 
 .logo h1 {
     font-size: 1.75rem;
     font-weight: 600;
+    color: var(--text-primary);
 }
 
 .logo p {
-    color: #4a5567;
+    color: var(--text-secondary);
     font-size: 0.875rem;
 }
 
@@ -159,4 +167,45 @@ header {
 
 .angle-input input[type="range"] {
     flex-grow: 1;
+}
+
+.theme-toggle {
+    position: relative;
+}
+
+.toggle-checkbox {
+    display: none;
+}
+
+.toggle-label {
+    display: block;
+    width: 60px;
+    height: 30px;
+    background-color: var(--border-color);
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+}
+
+.toggle-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.toggle-switch {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    background-color: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform var(--transition-speed);
+}
+
+.toggle-checkbox:checked + .toggle-label .toggle-switch {
+    transform: translateX(30px);
 }
