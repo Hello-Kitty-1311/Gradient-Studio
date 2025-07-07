@@ -17,18 +17,10 @@
                 <h1>Gradient Studio</h1>
                 <p>Craft Your Perfect Gradient</p>
             </div>
-            <div class="header-actions">
-                <div class="theme-toggle">
-                    <input type="checkbox" id="theme-switch" class="toggle-checkbox">
-                    <label for="theme-switch" class="toggle-label">
-                        <span class="toggle-inner"></span>
-                        <div class="toggle-switch"></div>
-                    </label>
-                </div>
-            </div>
         </header>
+
         <main>
-          <section class="gradient-preview">
+            <section class="gradient-preview">
                 <div class="preview-wrapper">
                     <div id="gradient-display" class="display"></div>
                 </div>
@@ -64,8 +56,18 @@
                         <span id="angle-value">90°</span>
                     </div>
                 </div>
+
+                <div class="control-group color-controls">
+                    <h3 class="color-stops-heading">Color Stops</h3>
+                    <div id="color-stops"></div>
+                    <div class="add-color-section">
+                        <button id="add-color" class="btn btn-accent">
+                            <i class="fas fa-plus"></i> Add Color Stop
+                        </button>
+                    </div>
+                </div>
             </div>
-        </main>  
+        </main>
     </div>
     <script src="script.js"></script>
 </body>
