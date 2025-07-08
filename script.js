@@ -2,9 +2,9 @@ class GradientStudio {
     constructor() {
         this.initializeElements();
         this.setupEventListeners();
+        this.loadTheme();
         this.addInitialColorStops();
         this.updateGradient();
-        this.loadTheme();
     }
 
     initializeElements() {
@@ -16,10 +16,10 @@ class GradientStudio {
         this.addColorBtn = document.getElementById('add-color');
         this.randomizeBtn = document.getElementById('randomize');
         this.copyGradientBtn = document.getElementById('copy-gradient');
+        this.themeSwitch = document.getElementById('theme-switch');
         this.exportFormat = document.getElementById('export-format');
         this.codeOutput = document.getElementById('code-output');
         this.copyCodeBtn = document.getElementById('copy-code');
-        this.themeSwitch = document.getElementById('theme-switch');
         this.savePresetBtn = document.getElementById('save-preset');
         this.loadPresetBtn = document.getElementById('load-preset');
     }
@@ -32,9 +32,9 @@ class GradientStudio {
         this.addColorBtn.addEventListener('click', () => this.addColorStop());
         this.randomizeBtn.addEventListener('click', () => this.randomizeGradient());
         this.copyGradientBtn.addEventListener('click', () => this.copyGradientCode());
+        this.themeSwitch.addEventListener('change', () => this.toggleTheme());
         this.exportFormat.addEventListener('change', () => this.updateCodeOutput());
         this.copyCodeBtn.addEventListener('click', () => this.copyCode());
-        this.themeSwitch.addEventListener('change', () => this.toggleTheme());
         this.savePresetBtn.addEventListener('click', () => this.savePreset());
         this.loadPresetBtn.addEventListener('click', () => this.showPresets());
     }
@@ -136,14 +136,6 @@ class GradientStudio {
         return `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`;
     }
 
-    copyGradientCode() {
-        navigator.clipboard.writeText(this.gradientDisplay.style.background).then(() => {
-            this.copyGradientBtn.innerHTML = '<i class="fas fa-check"></i>';
-            setTimeout(() => {
-                this.copyGradientBtn.innerHTML = '<i class="fas fa-copy"></i>';
-            }, 2000);
-        });
-    }
     updateCodeOutput() {
         const gradient = this.gradientDisplay.style.background;
         const format = this.exportFormat.value;
@@ -176,24 +168,14 @@ class GradientStudio {
             }, 2000);
         });
     }
-    
-    loadTheme() {
-        const savedTheme = localStorage.getItem('gradient-studio-theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            this.themeSwitch.checked = true;
-        }
-    }
 
-    toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        
-        if (isDarkMode) {
-            localStorage.setItem('gradient-studio-theme', 'dark');
-        } else {
-            localStorage.removeItem('gradient-studio-theme');
-        }
+    copyGradientCode() {
+        navigator.clipboard.writeText(this.gradientDisplay.style.background).then(() => {
+            this.copyGradientBtn.innerHTML = '<i class="fas fa-check"></i>';
+            setTimeout(() => {
+                this.copyGradientBtn.innerHTML = '<i class="fas fa-copy"></i>';
+            }, 2000);
+        });
     }
 
     savePreset() {
@@ -231,6 +213,25 @@ class GradientStudio {
         setTimeout(() => {
             notification.remove();
         }, 3000);
+    }
+
+    loadTheme() {
+        const savedTheme = localStorage.getItem('gradient-studio-theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            this.themeSwitch.checked = true;
+        }
+    }
+
+    toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        
+        if (isDarkMode) {
+            localStorage.setItem('gradient-studio-theme', 'dark');
+        } else {
+            localStorage.removeItem('gradient-studio-theme');
+        }
     }
 }
 
