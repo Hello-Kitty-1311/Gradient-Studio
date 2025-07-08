@@ -1,4 +1,3 @@
-// commit 3
 class GradientStudio {
     constructor() {
         this.initializeElements();
@@ -183,25 +182,6 @@ class GradientStudio {
         });
     }
 
-    loadTheme() {
-        const savedTheme = localStorage.getItem('gradient-studio-theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            this.themeSwitch.checked = true;
-        }
-    }
-
-    toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        
-        if (isDarkMode) {
-            localStorage.setItem('gradient-studio-theme', 'dark');
-        } else {
-            localStorage.removeItem('gradient-studio-theme');
-        }
-    }
-
     savePreset() {
         const currentPreset = {
             gradientType: document.querySelector('input[name="gradient-type"]:checked').value,
@@ -301,6 +281,25 @@ class GradientStudio {
         setTimeout(() => {
             notification.remove();
         }, 3000);
+    }
+
+    loadTheme() {
+        const savedTheme = localStorage.getItem('gradient-studio-theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            this.themeSwitch.checked = true;
+        }
+    }
+
+    toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        
+        if (isDarkMode) {
+            localStorage.setItem('gradient-studio-theme', 'dark');
+        } else {
+            localStorage.removeItem('gradient-studio-theme');
+        }
     }
 }
 
