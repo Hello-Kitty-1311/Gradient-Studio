@@ -1,3 +1,4 @@
+<!-- commit 3 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,6 +93,7 @@
                 </div>
             </div>
         </main>
+
         <footer>
             <div class="footer-actions">
                 <button id="save-preset" class="btn btn-primary">
@@ -102,6 +104,18 @@
                 </button>
             </div>
         </footer>
+
+        <div id="preset-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Saved Gradients</h2>
+                    <button id="close-modal" class="btn btn-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="preset-list" class="preset-list"></div>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

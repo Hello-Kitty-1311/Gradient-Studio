@@ -1,3 +1,4 @@
+// commit 3
 class GradientStudio {
     constructor() {
         this.initializeElements();
@@ -22,6 +23,9 @@ class GradientStudio {
         this.copyCodeBtn = document.getElementById('copy-code');
         this.savePresetBtn = document.getElementById('save-preset');
         this.loadPresetBtn = document.getElementById('load-preset');
+        this.presetModal = document.getElementById('preset-modal');
+        this.presetList = document.getElementById('preset-list');
+        this.closeModalBtn = document.getElementById('close-modal');
     }
 
     setupEventListeners() {
@@ -37,6 +41,7 @@ class GradientStudio {
         this.copyCodeBtn.addEventListener('click', () => this.copyCode());
         this.savePresetBtn.addEventListener('click', () => this.savePreset());
         this.loadPresetBtn.addEventListener('click', () => this.showPresets());
+        this.closeModalBtn.addEventListener('click', () => this.closeModal());
     }
 
     addInitialColorStops() {
@@ -178,6 +183,25 @@ class GradientStudio {
         });
     }
 
+    loadTheme() {
+        const savedTheme = localStorage.getItem('gradient-studio-theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            this.themeSwitch.checked = true;
+        }
+    }
+
+    toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        
+        if (isDarkMode) {
+            localStorage.setItem('gradient-studio-theme', 'dark');
+        } else {
+            localStorage.removeItem('gradient-studio-theme');
+        }
+    }
+
     savePreset() {
         const currentPreset = {
             gradientType: document.querySelector('input[name="gradient-type"]:checked').value,
@@ -201,7 +225,71 @@ class GradientStudio {
     }
 
     showPresets() {
-        console.log('TODO: Implement showPresets functionality');
+        const savedPresets = JSON.parse(localStorage.getItem('gradient-presets') || '[]');
+        
+        this.presetList.innerHTML = savedPresets.map((preset, index) => `
+            <div class="preset-item" data-index="${index}">
+                <div class="preset-preview" style="background: ${this.generatePresetGradient(preset)}"></div>
+                <div class="preset-actions">
+                    <button class="btn load-preset">Load</button>
+                    <button class="btn delete-preset">Delete</button>
+                </div>
+            </div>
+        `).join('');
+
+        this.presetList.addEventListener('click', (e) => {
+            const presetItem = e.target.closest('.preset-item');
+            if (!presetItem) return;
+
+            const index = presetItem.dataset.index;
+            if (e.target.classList.contains('load-preset')) {
+                this.loadPreset(savedPresets[index]);
+            } else if (e.target.classList.contains('delete-preset')) {
+                this.deletePreset(index);
+            }
+        });
+
+        this.presetModal.style.display = 'flex';
+    }
+
+    generatePresetGradient(preset) {
+        const colorStops = preset.colorStops
+            .map(stop => `${stop.color} ${stop.stop}%`)
+            .join(', ');
+
+        switch (preset.gradientType) {
+            case 'linear':
+                return `linear-gradient(${preset.angle}deg, ${colorStops})`;
+            case 'radial':
+                return `radial-gradient(circle, ${colorStops})`;
+            case 'conic':
+                return `conic-gradient(from ${preset.angle}deg, ${colorStops})`;
+        }
+    }
+
+    loadPreset(preset) {
+        document.querySelector(`input[value="${preset.gradientType}"]`).checked = true;
+        this.angleSlider.value = preset.angle;
+        this.angleValue.textContent = `${preset.angle}°`;
+
+        this.colorStopsContainer.innerHTML = '';
+        preset.colorStops.forEach(stop => {
+            this.addColorStop(stop.color, stop.stop);
+        });
+
+        this.updateGradient();
+        this.closeModal();
+    }
+
+    deletePreset(index) {
+        let savedPresets = JSON.parse(localStorage.getItem('gradient-presets') || '[]');
+        savedPresets.splice(index, 1);
+        localStorage.setItem('gradient-presets', JSON.stringify(savedPresets));
+        this.showPresets();
+    }
+
+    closeModal() {
+        this.presetModal.style.display = 'none';
     }
 
     showNotification(message) {
@@ -213,25 +301,6 @@ class GradientStudio {
         setTimeout(() => {
             notification.remove();
         }, 3000);
-    }
-
-    loadTheme() {
-        const savedTheme = localStorage.getItem('gradient-studio-theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            this.themeSwitch.checked = true;
-        }
-    }
-
-    toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        
-        if (isDarkMode) {
-            localStorage.setItem('gradient-studio-theme', 'dark');
-        } else {
-            localStorage.removeItem('gradient-studio-theme');
-        }
     }
 }
 
