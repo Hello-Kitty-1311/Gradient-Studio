@@ -373,6 +373,18 @@ footer {
     transform: translateX(30px);
 }
 
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--accent-color);
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    z-index: 1001;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 @media (max-width: 768px) {
     .app-container {
         padding: 0.5rem;
@@ -401,6 +413,10 @@ footer {
     .color-stop {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .preset-list {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
 
     .external-actions {

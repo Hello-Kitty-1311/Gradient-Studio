@@ -1,5 +1,6 @@
 class GradientStudio {
     constructor() {
+        this.presets = [];
         this.initializeElements();
         this.setupEventListeners();
         this.loadTheme();
@@ -183,10 +184,18 @@ class GradientStudio {
     }
 
     loadTheme() {
-        const savedTheme = JSON.parse(localStorage.getItem('gradient-studio-theme') || 'null');
+        const savedTheme = this.getStoredTheme();
         if (savedTheme === 'dark') {
             document.body.classList.add('dark-mode');
             this.themeSwitch.checked = true;
+        }
+    }
+
+    getStoredTheme() {
+        try {
+            return JSON.parse(localStorage.getItem('gradient-studio-theme') || 'null');
+        } catch {
+            return null;
         }
     }
 
@@ -195,10 +204,22 @@ class GradientStudio {
         const isDarkMode = document.body.classList.contains('dark-mode');
         
         if (isDarkMode) {
-            localStorage.setItem('gradient-studio-theme', JSON.stringify('dark'));
+            this.setStoredTheme('dark');
         } else {
-            localStorage.removeItem('gradient-studio-theme');
+            this.removeStoredTheme();
         }
+    }
+
+    setStoredTheme(theme) {
+        try {
+            localStorage.setItem('gradient-studio-theme', JSON.stringify(theme));
+        } catch {}
+    }
+
+    removeStoredTheme() {
+        try {
+            localStorage.removeItem('gradient-studio-theme');
+        } catch {}
     }
 
     savePreset() {
@@ -208,10 +229,8 @@ class GradientStudio {
             colorStops: this.getColorStopsData()
         };
 
-        let savedPresets = JSON.parse(localStorage.getItem('gradient-presets') || '[]');
-        savedPresets.push(currentPreset);
-        localStorage.setItem('gradient-presets', JSON.stringify(savedPresets));
-        
+        this.presets.push(currentPreset);
+        this.savePresetsToStorage();
         this.showNotification('Gradient preset saved successfully!');
     }
 
@@ -223,10 +242,24 @@ class GradientStudio {
         }));
     }
 
+    savePresetsToStorage() {
+        try {
+            localStorage.setItem('gradient-presets', JSON.stringify(this.presets));
+        } catch {}
+    }
+
+    loadPresetsFromStorage() {
+        try {
+            return JSON.parse(localStorage.getItem('gradient-presets') || '[]');
+        } catch {
+            return [];
+        }
+    }
+
     showPresets() {
-        const savedPresets = JSON.parse(localStorage.getItem('gradient-presets') || '[]');
+        this.presets = this.loadPresetsFromStorage();
         
-        this.presetList.innerHTML = savedPresets.map((preset, index) => `
+        this.presetList.innerHTML = this.presets.map((preset, index) => `
             <div class="preset-item" data-index="${index}">
                 <div class="preset-preview" style="background: ${this.generatePresetGradient(preset)}"></div>
                 <div class="preset-actions">
@@ -242,7 +275,7 @@ class GradientStudio {
 
             const index = presetItem.dataset.index;
             if (e.target.classList.contains('load-preset')) {
-                this.loadPreset(savedPresets[index]);
+                this.loadPreset(this.presets[index]);
             } else if (e.target.classList.contains('delete-preset')) {
                 this.deletePreset(index);
             }
@@ -281,9 +314,8 @@ class GradientStudio {
     }
 
     deletePreset(index) {
-        let savedPresets = JSON.parse(localStorage.getItem('gradient-presets') || '[]');
-        savedPresets.splice(index, 1);
-        localStorage.setItem('gradient-presets', JSON.stringify(savedPresets));
+        this.presets.splice(index, 1);
+        this.savePresetsToStorage();
         this.showPresets();
     }
 
@@ -295,17 +327,6 @@ class GradientStudio {
         const notification = document.createElement('div');
         notification.classList.add('notification');
         notification.textContent = message;
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--accent-color);
-            color: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            z-index: 1001;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        `;
         document.body.appendChild(notification);
 
         setTimeout(() => {
@@ -315,5 +336,5 @@ class GradientStudio {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const gradientStudio = new GradientStudio();
+    new GradientStudio();
 });
