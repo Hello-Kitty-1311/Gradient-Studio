@@ -182,6 +182,25 @@ class GradientStudio {
         });
     }
 
+    loadTheme() {
+        const savedTheme = JSON.parse(localStorage.getItem('gradient-studio-theme') || 'null');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            this.themeSwitch.checked = true;
+        }
+    }
+
+    toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        
+        if (isDarkMode) {
+            localStorage.setItem('gradient-studio-theme', JSON.stringify('dark'));
+        } else {
+            localStorage.removeItem('gradient-studio-theme');
+        }
+    }
+
     savePreset() {
         const currentPreset = {
             gradientType: document.querySelector('input[name="gradient-type"]:checked').value,
@@ -276,30 +295,22 @@ class GradientStudio {
         const notification = document.createElement('div');
         notification.classList.add('notification');
         notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            z-index: 1001;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        `;
         document.body.appendChild(notification);
 
         setTimeout(() => {
             notification.remove();
         }, 3000);
-    }
-
-    loadTheme() {
-        const savedTheme = localStorage.getItem('gradient-studio-theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            this.themeSwitch.checked = true;
-        }
-    }
-
-    toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        
-        if (isDarkMode) {
-            localStorage.setItem('gradient-studio-theme', 'dark');
-        } else {
-            localStorage.removeItem('gradient-studio-theme');
-        }
     }
 }
 
